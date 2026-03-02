@@ -1,0 +1,17 @@
+requests
+beautifulsoup4
+selenium
+sentence-transformers
+faiss-cpu
+google-generativeai
+python-dotenv
+fastapi
+uvicorn
+pydantic
+streamlit
+pandas
+tqdm
+numpy
+lxml
+openpyxl
+httpx
