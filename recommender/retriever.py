@@ -21,11 +21,17 @@ class Retriever:
 
     def load_resources(self):
         if os.path.exists(INDEX_PATH) and os.path.exists(METADATA_PATH):
-            print(f"Loading retriever resources from {os.path.dirname(INDEX_PATH)}...")
+            print(f"Loading FAISS index from {INDEX_PATH}...")
             self.index = faiss.read_index(INDEX_PATH)
+            
+            print(f"Loading metadata from {METADATA_PATH}...")
             with open(METADATA_PATH, "rb") as f:
                 self.metadata = pickle.load(f)
+            
+            print(f"Loading SentenceTransformer model ({MODEL_NAME})...")
+            # Note: This might take time on first run as it downloads weights
             self.model = SentenceTransformer(MODEL_NAME)
+            print("Resources loaded successfully.")
         else:
             print("WARNING: Retriever resources not found. Build the index first.")
 
