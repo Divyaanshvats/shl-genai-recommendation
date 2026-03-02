@@ -18,19 +18,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+import os
+# Limit PyTorch threads to reduce memory footprint on Render free tier
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+
 # Include routes
 app.include_router(router)
-
-@app.on_event("startup")
-async def startup_event():
-    print("Starting up SHL Recommender API...")
-    from app.routes import get_engine
-    # Pre-initialize engine at startup to avoid first-request timeout
-    try:
-        get_engine()
-        print("Recommendation engine initialized successfully.")
-    except Exception as e:
-        print(f"Error during engine initialization: {e}")
 
 @app.get("/")
 async def root():
