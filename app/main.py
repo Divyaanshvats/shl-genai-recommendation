@@ -40,7 +40,8 @@ if __name__ == "__main__":
         host="0.0.0.0", 
         port=8000, 
         timeout_keep_alive=120,
-        worker_class="uvicorn.workers.UvicornWorker",
-        reload=True
+        workers=1,
+        limit_concurrency=10,
+        reload=False  # Disable reload in production to save memory
     )
 

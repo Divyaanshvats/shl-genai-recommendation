@@ -6,6 +6,7 @@ import faiss
 import pickle
 import numpy as np
 import os
+import gc
 from sentence_transformers import SentenceTransformer
 
 INDEX_PATH = "data/embeddings/faiss.index"
@@ -22,7 +23,8 @@ class Retriever:
     def load_resources(self):
         if os.path.exists(INDEX_PATH) and os.path.exists(METADATA_PATH):
             print(f"Loading FAISS index from {INDEX_PATH}...")
-            self.index = faiss.read_index(INDEX_PATH)
+            # Use mmap to load index from disk without consuming RAM
+            self.index = faiss.read_index(INDEX_PATH, faiss.IO_FLAG_MMAP)
             
             print(f"Loading metadata from {METADATA_PATH}...")
             with open(METADATA_PATH, "rb") as f:
@@ -31,6 +33,9 @@ class Retriever:
             print(f"Loading SentenceTransformer model ({MODEL_NAME})...")
             # Note: This might take time on first run as it downloads weights
             self.model = SentenceTransformer(MODEL_NAME)
+            
+            # Force garbage collection to free up any temporary boot memory
+            gc.collect()
             print("Resources loaded successfully.")
         else:
             print("WARNING: Retriever resources not found. Build the index first.")
