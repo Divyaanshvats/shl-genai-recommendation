@@ -34,4 +34,13 @@ async def root():
     return {"message": "SHL Recommender API is running", "endpoints": ["/health", "/recommend"]}
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    # Increase timeout limits to allow heavy ML model to load on Render free tier
+    uvicorn.run(
+        "app.main:app", 
+        host="0.0.0.0", 
+        port=8000, 
+        timeout_keep_alive=120,
+        worker_class="uvicorn.workers.UvicornWorker",
+        reload=True
+    )
+
