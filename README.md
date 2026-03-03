@@ -35,3 +35,6 @@ Run `python evaluation/evaluate.py` to compute Mean Recall@10 on the training da
 - [x] Streamlit Frontend.
 - [x] `predictions.csv` for the test set.
 - [x] 2-page Approach Document.
+
+<img width="1887" height="998" alt="image" src="https://github.com/user-attachments/assets/6b068330-963b-4727-b8a5-2c9bb78cd180" />
+
