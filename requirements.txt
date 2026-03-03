@@ -1,8 +1,11 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+sentence-transformers
+faiss-cpu
 requests
 beautifulsoup4
 selenium
-sentence-transformers
-faiss-cpu
+
 google-generativeai
 python-dotenv
 fastapi
